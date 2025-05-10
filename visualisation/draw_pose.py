@@ -1,4 +1,3 @@
-# pose_estimation_project/visualization/draw_pose.py
 import cv2
 import numpy as np
 from scipy.spatial.transform import Rotation as R
