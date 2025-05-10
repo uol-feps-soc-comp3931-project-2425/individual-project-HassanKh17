@@ -3,11 +3,11 @@ from model.posecnn import PoseCNN
 from data.dataloader import create_dataloader
 from training.train import train_model, plot_losses
 from training.metrics import evaluate_predictions
-from visualization.draw_pose import draw_pose_axes, extract_mask_keypoints
+from visualisation.draw_pose import draw_pose_axes, extract_mask_keypoints
 import json
 import numpy as np
 
-def visualize_predictions(model, dataloader, output_dir, camera_matrix, num_samples=5):
+def visualise_predictions(model, dataloader, output_dir, camera_matrix, num_samples=5):
     """Visualize predictions on sample images"""
     os.makedirs(output_dir, exist_ok=True)
     model.eval()
@@ -126,13 +126,13 @@ def main():
         camera_matrix,
         obj_diameter=150.0  #
     )
-    # Visualize predictions
-    visualize_predictions(
+    # Visualise predictions
+    visualise_predictions(
         model=model,
         dataloader=train_loader,
         output_dir=config['output_dir'],
         camera_matrix=camera_matrix,
-        num_samples=5  # Number of samples to visualize
+        num_samples=5  # Number of samples to visualise
     )
     print("\nTraining complete!")
 
