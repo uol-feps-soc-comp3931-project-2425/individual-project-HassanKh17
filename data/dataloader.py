@@ -24,7 +24,6 @@ class PoseDataset(Dataset):
         self.image_dir = os.path.join(dataset_root, "image_resized")
         self.annotation_file = annotation_file
         self.mask_dir= mask_dir
-        self.transform= transform to ToTensorWithMask()
         
         # Load pose annotations
         with open(annotation_file, "r") as f:
