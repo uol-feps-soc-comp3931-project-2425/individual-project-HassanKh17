@@ -80,7 +80,7 @@ def main():
         train_loader,
         epochs=config['epochs'],
         lr=config['lr'],
-        device=config['device']
+        device=config['device'],
         output_manager= output_manager
     )
     
