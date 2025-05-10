@@ -9,7 +9,7 @@ import numpy as np
 def main():
     # Configuration
     config = {
-        'data_root': r"C:\Users\lunap\Downloads\MFB_TRAIN\TRAIN",
+        'data_root': r"MFB_TRAIN\TRAIN",
         'batch_size': 16,
         'epochs': 20,
         'lr': 0.001,
