@@ -9,7 +9,7 @@ import json
 import numpy as np
 
 def visualise_predictions(model, dataloader, output_manager, camera_matrix, num_samples=5):
-    """Visualize predictions on sample images"""
+    """Visualise predictions on sample images"""
     model.eval()
     
     for i, (images, gt_trans, gt_rot) in enumerate(dataloader):
@@ -21,7 +21,7 @@ def visualise_predictions(model, dataloader, output_manager, camera_matrix, num_
             pred_trans, pred_rot = model(images.to('cuda'))
             pred_trans = pred_trans.cpu().numpy()[0] * 1000  # Convert to mm
             pred_rot = pred_rot.cpu().numpy()[0]
-            pred_rot = pred_rot / np.linalg.norm(pred_rot)  # Normalize
+            pred_rot = pred_rot / np.linalg.norm(pred_rot)  # Normalise
             
         # Convert image tensor to numpy
         img_np = images[0].permute(1, 2, 0).cpu().numpy()
@@ -80,8 +80,7 @@ def main():
         train_loader,
         epochs=config['epochs'],
         lr=config['lr'],
-        device=config['device'],
-        output_manager= output_manager
+        device=config['device']
     )
     
     output_manager.save_loss_plot(train_losses)
