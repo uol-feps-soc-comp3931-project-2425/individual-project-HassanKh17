@@ -3,8 +3,51 @@ from model.posecnn import PoseCNN
 from data.dataloader import create_dataloader
 from training.train import train_model, plot_losses
 from training.metrics import evaluate_predictions
+from visualization.draw_pose import draw_pose_axes, extract_mask_keypoints
 import json
 import numpy as np
+
+def visualize_predictions(model, dataloader, output_dir, camera_matrix, num_samples=5):
+    """Visualize predictions on sample images"""
+    os.makedirs(output_dir, exist_ok=True)
+    model.eval()
+    
+    for i, (images, gt_trans, gt_rot) in enumerate(dataloader):
+        if i >= num_samples:  # Only visualize first N samples
+            break
+            
+        # Get prediction
+        with torch.no_grad():
+            pred_trans, pred_rot = model(images.to('cuda'))
+            pred_trans = pred_trans.cpu().numpy()[0] * 1000  # Convert to mm
+            pred_rot = pred_rot.cpu().numpy()[0]
+            pred_rot = pred_rot / np.linalg.norm(pred_rot)  # Normalize
+            
+        # Convert image tensor to numpy
+        img_np = images[0].permute(1, 2, 0).cpu().numpy()
+        img_np = (img_np * 255).astype(np.uint8)
+        
+        # Get mask if available (assuming 4-channel input: RGB + mask)
+        mask = None
+        if images.shape[1] == 4:  # RGB + mask
+            mask = (images[0][3].cpu().numpy() * 255).astype(np.uint8)
+            origin = extract_mask_keypoints(mask)["center"] if extract_mask_keypoints(mask) else None
+        else:
+            origin = None
+        
+        # Draw predicted pose
+        vis_img = draw_pose_axes(
+            image=img_np.copy(),
+            translation=pred_trans,
+            quaternion=pred_rot,
+            camera_matrix=camera_matrix,
+            origin_2d=origin
+        )
+        
+        # Save visualization
+        output_path = os.path.join(output_dir, f"pred_{i}.png")
+        cv2.imwrite(output_path, cv2.cvtColor(vis_img, cv2.COLOR_RGB2BGR))
+        print(f"Saved visualization: {output_path}")
 
 def main():
     # Configuration
@@ -81,9 +124,16 @@ def main():
         annotations,
         model_points,
         camera_matrix,
-        obj_diameter=150.0  # Adjust based on your object
+        obj_diameter=150.0  #
     )
-    
+    # Visualize predictions
+    visualize_predictions(
+        model=model,
+        dataloader=train_loader,
+        output_dir=config['output_dir'],
+        camera_matrix=camera_matrix,
+        num_samples=5  # Number of samples to visualize
+    )
     print("\nTraining complete!")
 
 if __name__ == '__main__':
