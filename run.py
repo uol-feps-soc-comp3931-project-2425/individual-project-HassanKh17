@@ -130,7 +130,7 @@ def main():
     visualise_predictions(
         model=model,
         dataloader=train_loader,
-        output_dir=config['output_dir'],
+        output_manager=output_manager,
         camera_matrix=camera_matrix,
         num_samples=5  # Number of samples to visualise
     )
