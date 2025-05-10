@@ -4,6 +4,7 @@ from data.dataloader import create_dataloader
 from training.train import train_model, plot_losses
 from training.metrics import evaluate_predictions
 from visualisation.draw_pose import draw_pose_axes, extract_mask_keypoints
+from utils.output_manager import OutputManager
 import json
 import numpy as np
 
@@ -27,7 +28,7 @@ def visualise_predictions(model, dataloader, output_dir, camera_matrix, num_samp
         img_np = images[0].permute(1, 2, 0).cpu().numpy()
         img_np = (img_np * 255).astype(np.uint8)
         
-        # Get mask if available (assuming 4-channel input: RGB + mask)
+        # Get mask if available ( 4-channel input: RGB + mask)
         mask = None
         if images.shape[1] == 4:  # RGB + mask
             mask = (images[0][3].cpu().numpy() * 255).astype(np.uint8)
@@ -44,10 +45,9 @@ def visualise_predictions(model, dataloader, output_dir, camera_matrix, num_samp
             origin_2d=origin
         )
         
-        # Save visualization
-        output_path = os.path.join(output_dir, f"pred_{i}.png")
-        cv2.imwrite(output_path, cv2.cvtColor(vis_img, cv2.COLOR_RGB2BGR))
-        print(f"Saved visualization: {output_path}")
+        # Save visualisation
+        output_manager.save_visualisation(vis_img, f"pred_{i}")
+        
 
 def main():
     # Configuration
@@ -81,10 +81,10 @@ def main():
         epochs=config['epochs'],
         lr=config['lr'],
         device=config['device']
+        output_manager= output_manager
     )
     
-    # Save loss plot
-    plot_losses(train_losses, save_path='training_loss.png')
+   output_manager.save_loss_plot(train_losses)
     
     # Evaluation
     print("\nEvaluating model...")
@@ -126,6 +126,7 @@ def main():
         camera_matrix,
         obj_diameter=150.0  #
     )
+    output_manager.save_evaluation_results(results)
     # Visualise predictions
     visualise_predictions(
         model=model,
