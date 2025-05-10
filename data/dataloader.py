@@ -6,6 +6,7 @@ import torch
 from torch.utils.data import Dataset, DataLoader
 from torchvision import transforms
 from torchvision.transforms import functional as TF
+from .preprocess import preprocess_dataset
 
 class PoseDataset(Dataset):
     """Dataset for loading RGB images, masks and 6D pose annotations"""
@@ -17,7 +18,8 @@ class PoseDataset(Dataset):
             mask_dir: Directory with mask images (optional)
             transform: Torchvision transforms
         """
-        self.image_dir = image_dir
+        preprocess_dataset(dataset_root)
+        self.image_dir = os.path.join(dataset_root, "image_resized")
         self.mask_dir = mask_dir
         
         # Load pose annotations
