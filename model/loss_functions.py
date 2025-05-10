@@ -1,4 +1,3 @@
-# pose_estimation_project/model/loss_functions.py
 import torch
 import torch.nn as nn
 
