@@ -10,7 +10,7 @@ from .preprocess import preprocess_dataset
 
 class PoseDataset(Dataset):
     """Dataset for loading RGB images, masks and 6D pose annotations"""
-    def __init__(self, image_dir, dataset_root,annotation_file, mask_dir=None, transform=None):
+    def __init__(self, image_dir,annotation_file, mask_dir=None, transform=None):
         """
         Args:
             image_dir: Directory with RGB images
@@ -18,9 +18,13 @@ class PoseDataset(Dataset):
             mask_dir: Directory with mask images (optional)
             transform: Torchvision transforms
         """
+        dataset_root=os.path.dirname(annotation_file)
+        
         preprocess_dataset(dataset_root)
         self.image_dir = os.path.join(dataset_root, "image_resized")
-        self.annotation_file = os.path.join(dataset_root, "posecnn_annotations.json")
+        self.annotation_file = annotation_file
+        self.mask_dir= mask_dir
+        self.transform= transform to ToTensorWithMask()
         
         # Load pose annotations
         with open(annotation_file, "r") as f:
