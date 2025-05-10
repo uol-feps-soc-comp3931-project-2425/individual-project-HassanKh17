@@ -22,8 +22,6 @@ It is tailored for datasets with annotated pose matrices, camera intrinsics, and
 
 ```bash
 pose_estimation_project/
-├── config/                   # Configuration values (paths, intrinsics)
-│   └── config.py
 ├── data/                    # Dataset and loading utilities
 │   ├── dataloader.py        # Custom PyTorch Dataset class
 │   └── utils.py             # Preprocessing, augmentation (if added)
@@ -32,8 +30,7 @@ pose_estimation_project/
 │   └── loss_functions.py    # Quaternion loss + translation MSE
 ├── training/                # Training and evaluation logic
 │   ├── train.py             # Train loop
-│   ├── metrics.py           # ADD, ADD-S, 2D Projection error
-│   └── validate.py          # (Optional) evaluation logic split
+│   └── metrics.py           # ADD, ADD-S, 2D Projection error
 ├── visualisation/           # Drawing and debugging tools
 │   ├── draw_pose.py         # Overlay pose axes and keypoints
 │   └── vis_utils.py         # (Optional) utils for mask/contour visualisation
@@ -153,8 +150,4 @@ Modify `config.py` to change:
 
 ---
 
-## 🤝 Acknowledgements
-This project was developed as part of the COMP3931 Individual Project module at the University of Leeds, under the supervision of **Dr. Duygu Sarikaya**.
-
-> "Start where you are. Use what you have. Do what you can." — Arthur Ashe
 
