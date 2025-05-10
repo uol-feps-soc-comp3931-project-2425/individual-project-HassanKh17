@@ -10,7 +10,7 @@ from .preprocess import preprocess_dataset
 
 class PoseDataset(Dataset):
     """Dataset for loading RGB images, masks and 6D pose annotations"""
-    def __init__(self, image_dir, annotation_file, mask_dir=None, transform=None):
+    def __init__(self, image_dir, dataset_root,annotation_file, mask_dir=None, transform=None):
         """
         Args:
             image_dir: Directory with RGB images
