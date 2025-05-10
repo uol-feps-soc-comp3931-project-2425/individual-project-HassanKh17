@@ -15,7 +15,6 @@ def main():
         'lr': 0.001,
         'device': 'cuda' if torch.cuda.is_available() else 'cpu'
     }
-    
     # Create model
     model = PoseCNN()
     
