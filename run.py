@@ -10,7 +10,6 @@ import numpy as np
 
 def visualise_predictions(model, dataloader, output_manager, camera_matrix, num_samples=5):
     """Visualize predictions on sample images"""
-    os.makedirs(output_dir, exist_ok=True)
     model.eval()
     
     for i, (images, gt_trans, gt_rot) in enumerate(dataloader):
@@ -58,6 +57,7 @@ def main():
         'lr': 0.001,
         'device': 'cuda' if torch.cuda.is_available() else 'cpu'
     }
+    output_manager = OutputManager(base_path="outputs", experiment_name="posecnn_experiment")
     # Create model
     model = PoseCNN()
     
