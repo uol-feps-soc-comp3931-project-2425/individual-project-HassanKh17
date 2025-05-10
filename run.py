@@ -41,7 +41,7 @@ def visualise_predictions(model, dataloader, output_manager, camera_matrix, num_
             translation=pred_trans,
             quaternion=pred_rot,
             camera_matrix=camera_matrix,
-            origin_2d=origin
+            origin=origin
         )
         
         # Save visualisation
