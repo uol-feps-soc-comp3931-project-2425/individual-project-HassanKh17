@@ -8,7 +8,7 @@ from utils.output_manager import OutputManager
 import json
 import numpy as np
 
-def visualise_predictions(model, dataloader, output_dir, camera_matrix, num_samples=5):
+def visualise_predictions(model, dataloader, output_manager, camera_matrix, num_samples=5):
     """Visualize predictions on sample images"""
     os.makedirs(output_dir, exist_ok=True)
     model.eval()
