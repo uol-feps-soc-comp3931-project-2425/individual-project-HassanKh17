@@ -19,8 +19,8 @@ class PoseDataset(Dataset):
             transform: Torchvision transforms
         """
         preprocess_dataset(dataset_root)
-        self.image_dir = image_dir
-        self.mask_dir = mask_dir
+        self.image_dir = os.path.join(dataset_root, "image_resized")
+        self.annotation_file = os.path.join(dataset_root, "posecnn_annotations.json")
         
         # Load pose annotations
         with open(annotation_file, "r") as f:
