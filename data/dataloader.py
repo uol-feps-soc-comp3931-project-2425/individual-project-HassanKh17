@@ -19,7 +19,7 @@ class PoseDataset(Dataset):
             transform: Torchvision transforms
         """
         preprocess_dataset(dataset_root)
-        self.image_dir = os.path.join(dataset_root, "image_resized")
+        self.image_dir = image_dir
         self.mask_dir = mask_dir
         
         # Load pose annotations
