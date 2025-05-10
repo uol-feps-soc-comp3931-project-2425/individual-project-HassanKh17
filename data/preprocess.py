@@ -7,17 +7,33 @@ from scipy.spatial.transform import Rotation as R
 def preprocess_dataset(dataset_root):
     """Run one-time preprocessing for resizing images and converting poses"""
     # Define paths
+    dataset_root = os.path.normpath(dataset_root)
+    if not os.path.isdir(dataset_root):
+        raise NotADirectoryError(f"Dataset root not found: {dataset_root}")
     image_dir = os.path.join(dataset_root, "image")
     pose_dir = os.path.join(dataset_root, "pose")
     resized_dir = os.path.join(dataset_root, "image_resized")
     annotation_path = os.path.join(dataset_root, "posecnn_annotations.json")
     
-    # Only run if preprocessing hasn't been done
-    if not os.path.exists(resized_dir) or not os.path.exists(annotation_path):
-        _resize_images(image_dir, resized_dir)
-        _generate_annotations(pose_dir, annotation_path)
+   # Verify input directories exist
+    if not os.path.isdir(image_dir):
+        raise NotADirectoryError(f"Image directory not found: {image_dir}")
+    if not os.path.isdir(pose_dir):
+        raise NotADirectoryError(f"Pose directory not found: {pose_dir}")
+
+    # Only run preprocessing if outputs don't exist
+    needs_resize = not os.path.isdir(resized_dir)
+    needs_annotations = not os.path.exists(annotation_path)
+
+    if needs_resize or needs_annotations:
+        print("🚀 Starting dataset preprocessing...")
+        if needs_resize:
+            _resize_images(image_dir, resized_dir)
+        if needs_annotations:
+            _generate_annotations(pose_dir, annotation_path)
+        print("✅ Preprocessing complete!")
     else:
-        print("✅ Preprocessing already complete - using cached files")
+        print("✅ Using existing preprocessed files")
 
 def _resize_images(image_dir, resized_dir):
     """Resize images to 640x480 and save to new directory"""
