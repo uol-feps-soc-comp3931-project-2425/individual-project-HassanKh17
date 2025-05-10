@@ -98,12 +98,12 @@ class OutputManager:
         with open(self.log_file, 'a') as f:
             f.write(json.dumps(log_entry) + "\n")
     
-    def save_visualization(self, 
+    def save_visualisation(self, 
                          image: np.ndarray, 
                          name: str, 
                          epoch: int = None):
         """
-        Save visualization image to visualizations directory
+        Save visualisation image to visualisations directory
         
         Args:
             image: Image array to save
@@ -122,7 +122,7 @@ class OutputManager:
                       val_losses: list = None,
                       filename: str = "loss_curve.png"):
         """
-        Save loss curve plot to visualizations directory
+        Save loss curve plot to visualisations directory
         
         Args:
             train_losses: List of training losses per epoch
