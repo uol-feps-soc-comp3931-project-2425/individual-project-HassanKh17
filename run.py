@@ -84,7 +84,7 @@ def main():
         output_manager= output_manager
     )
     
-   output_manager.save_loss_plot(train_losses)
+    output_manager.save_loss_plot(train_losses)
     
     # Evaluation
     print("\nEvaluating model...")
