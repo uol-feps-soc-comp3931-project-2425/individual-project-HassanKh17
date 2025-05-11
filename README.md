@@ -142,7 +142,7 @@ Use `OutputManager` in `utils/` for flexible saving.
 ---
 
 ## ⚙️ Configuration
-Modify `config.py` to change:
+Modify `run.py` to change:
 - Dataset paths
 - Object diameter
 - Camera intrinsics
