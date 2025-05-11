@@ -33,7 +33,6 @@ pose_estimation_project/
 │   └── metrics.py           # ADD, ADD-S, 2D Projection error
 ├── visualisation/           # Drawing and debugging tools
 │   ├── draw_pose.py         # Overlay pose axes and keypoints
-│   └── vis_utils.py         # (Optional) utils for mask/contour visualisation
 ├── validation/              # Standalone integrity checkers
 │   ├── verify_pose_integrity.py     # Checks .npy matrices
 │   └── verify_annotations_json.py   # Confirms unit quaternion annotations
