@@ -5,6 +5,7 @@ import numpy as np
 from datetime import datetime
 from typing import Dict, Any
 import matplotlib.pyplot as plt
+import cv2
 
 class OutputManager:
     """
@@ -57,9 +58,9 @@ class OutputManager:
         Args:
             model: Model to save
             epoch: Current epoch number
-            optimizer: Optimizer state (optional)
-            metrics: Dictionary of metrics to save (optional)
-            filename: Custom filename (optional)
+            optimizer: Optimizer state 
+            metrics: Dictionary of metrics to save 
+            filename: Custom filename 
         """
         if filename is None:
             filename = f"checkpoint_epoch{epoch:03d}.pth"
@@ -86,7 +87,7 @@ class OutputManager:
         Args:
             epoch: Current epoch number
             train_metrics: Dictionary of training metrics
-            val_metrics: Dictionary of validation metrics (optional)
+            val_metrics: Dictionary of validation metrics
         """
         log_entry = {
             'epoch': epoch,
@@ -101,7 +102,8 @@ class OutputManager:
     def save_visualisation(self, 
                          image: np.ndarray, 
                          name: str, 
-                         epoch: int = None):
+                         epoch: int = None,
+                         convert_color=True):
         """
         Save visualisation image to visualisations directory
         
@@ -114,7 +116,8 @@ class OutputManager:
             name = f"epoch{epoch:03d}_{name}"
             
         vis_path = os.path.join(self.vis_dir, f"{name}.png")
-        plt.imsave(vis_path, image)
+        # Save the image to the specified path using OpenCV
+        cv2.imwrite(vis_path, image)
         return vis_path
     
     def save_loss_plot(self, 
@@ -126,7 +129,7 @@ class OutputManager:
         
         Args:
             train_losses: List of training losses per epoch
-            val_losses: List of validation losses per epoch (optional)
+            val_losses: List of validation losses per epoch
             filename: Name for the plot file
         """
         plt.figure()
